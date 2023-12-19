@@ -6,3 +6,8 @@ type ClipboardItem struct {
 }
 
 type TClipboard map[string]ClipboardItem
+
+const (
+	ClipboardEvent = "clipboard"
+	ClipboardSlot  = "slotClipboardChanges"
+)

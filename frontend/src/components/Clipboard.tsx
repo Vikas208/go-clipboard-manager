@@ -3,32 +3,50 @@ import "../styles/clipboard.css";
 import { TClipboard } from "../../schema/clipboard";
 import { clipboardData } from "../services/sampledata";
 import SlotListItems from "./SlotListItems";
-import { Container, Grid } from "@mui/material";
+import { Container, Grid, debounce } from "@mui/material";
 import { EventsOn } from "../../wailsjs/runtime/runtime";
 
 export default function Clipboard() {
-  const [copiedData, setCopiedData] = useState<TClipboard>(clipboardData);
+  let [copiedData, setCopiedData] = useState<TClipboard>(clipboardData);
 
   if (Object.keys(copiedData).length === 0) return null;
 
-  EventsOn("clipboard", (data: any) => {
-    try {
-      let _data = JSON.parse(atob(data));
-      console.log(_data)
-      setCopiedData((prev) => {
-        console.log('prev',prev)
+  const debouncedUpdateState = debounce(
+    (data: { id: string; Items: Array<string> }) => {
+      setCopiedData((pre) => {
         return {
-          ...prev,
-          [_data.id]: {
-            ...prev[_data.id],
-            Items: [...prev[_data.id].Items, ..._data.Items],
+          ...pre,
+          [data.id]: {
+            id: data.id,
+            Items: [...pre[data.id].Items, ...data.Items],
           },
         };
-      })
-    } catch (err) {
-      console.log(err);
-    }
-  });
+      });
+    },
+    300
+  );
+
+  useEffect(() => {
+    EventsOn("clipboard", (data: any) => {
+      try {
+        let _data = JSON.parse(atob(data));
+        console.log(_data);
+        debouncedUpdateState(_data);
+      } catch (err) {
+        console.log(err);
+      }
+    });
+
+    EventsOn("slotClipboardChanges", (data: any) => {
+      try {
+        let _data = JSON.parse(atob(data));
+        console.log("Slot Changes", _data);
+        debouncedUpdateState(_data);
+      } catch (err) {
+        console.log(err);
+      }
+    });
+  }, []);
 
   return (
     <Container sx={{ marginTop: "1rem" }}>

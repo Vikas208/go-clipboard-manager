@@ -20,4 +20,21 @@ export const clipboardData: TClipboard = {
     id: "4",
     Items: [],
   },
+  "5": {
+    id: "5",
+    Items: [],
+  },
+  "6": {
+    id: "6",
+    Items: [],
+  },
+  "7": {
+    id: "7",
+    Items: [],
+  },
+  "8": {
+    id: "8",
+    Items: [],
+  },
+
 };
