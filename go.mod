@@ -5,6 +5,7 @@ go 1.21
 toolchain go1.21.5
 
 require (
+	github.com/mattn/go-sqlite3 v1.14.19
 	github.com/robotn/gohook v0.41.0
 	github.com/wailsapp/wails/v2 v2.7.1
 	golang.design/x/clipboard v0.7.0

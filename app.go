@@ -3,8 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-
-	"github.com/Vikas208/Clipboard/pkg/clipboard"
 )
 
 // App struct
@@ -22,7 +20,6 @@ func NewApp() *App {
 // so we can call the runtime methods
 func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
-	clipboard.Init(ctx)
 }
 
 // Greet returns a greeting for the given name

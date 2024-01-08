@@ -1,12 +1,10 @@
-import logo from "./assets/images/logo.png";
-import "./App.css";
-import Clipboard from "./components/Clipboard";
+import { Outlet } from "react-router-dom";
 import Navbar from "./components/Navbar";
 function App() {
   return (
     <div id="App">
       <Navbar />
-      <Clipboard />
+      <Outlet />
     </div>
   );
 }
